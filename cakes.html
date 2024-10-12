@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cakes - Cake Shop</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Cake Bake</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="cakes.html">Cakes</a>
+            <a href="carts.html">Cart</a>
+        </nav>
+    </header>
+
+    <section id="cakes">
+        <h2>Our Cakes</h2>
+        <div class="cake-list">
+          
+            <div class="cake-card">
+                <img src="image1.png" alt="Chocolate Cake">
+                <h3>Choco lava Cake</h3>
+                <p>$15</p>
+                <div class="quantity">
+                    <button onclick="changeQuantity(this, -1)">-</button>
+                    <span class="quantity-count">1</span>
+                    <button onclick="changeQuantity(this, 1)">+</button>
+                </div>
+                <button onclick="addToCart('Choco lava Cake', 15, this)">Add to Cart</button>
+            </div>
+
+            <div class="cake-card">
+                <img src="image2.png" alt="Vanilla Cake">
+                <h3>Roasted almond Cake</h3>
+                <p>$20</p>
+                <div class="quantity">
+                    <button onclick="changeQuantity(this, -1)">-</button>
+                    <span class="quantity-count">1</span>
+                    <button onclick="changeQuantity(this, 1)">+</button>
+                </div>
+                <button onclick="addToCart('Roasted almond Cake', 20, this)">Add to Cart</button>
+            </div>
+            <div class="cake-card">
+                <img src="image3.png" alt="Vanilla Cake">
+                <h3>Black Forest  Cake</h3>
+                <p>$100</p>
+                <div class="quantity">
+                    <button onclick="changeQuantity(this, -1)">-</button>
+                    <span class="quantity-count">1</span>
+                    <button onclick="changeQuantity(this, 1)">+</button>
+                </div>
+                <button onclick="addToCart('Black Forest Cake', 100, this)">Add to Cart</button>
+            </div>
+            <div class="cake-card">
+                <img src="image4.png" alt="Vanilla Cake">
+                <h3>Irish coffee Cake</h3>
+                <p>$500</p>
+                <div class="quantity">
+                    <button onclick="changeQuantity(this, -1)">-</button>
+                    <span class="quantity-count">1</span>
+                    <button onclick="changeQuantity(this, 1)">+</button>
+                </div>
+                <button onclick="addToCart('Irish coffee Cake', 500, this)">Add to Cart</button>
+            </div>
+            <div class="cake-card">
+                <img src="image6.png" alt="Vanilla Cake">
+                <h3>Coffee Cake</h3>
+                <p>$350</p>
+                <div class="quantity">
+                    <button onclick="changeQuantity(this, -1)">-</button>
+                    <span class="quantity-count">1</span>
+                    <button onclick="changeQuantity(this, 1)">+</button>
+                </div>
+                <button onclick="addToCart('Coffee Cake', 350, this)">Add to Cart</button>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+       
+        function changeQuantity(element, delta) {
+            const quantityElem = element.parentElement.querySelector('.quantity-count');
+            let currentQuantity = parseInt(quantityElem.innerText);
+            currentQuantity = Math.max(1, currentQuantity + delta); 
+            quantityElem.innerText = currentQuantity;
+        }
+
+       
+        function addToCart(cakeName, price, element) {
+            const cakeCard = element.closest('.cake-card');
+            const quantity = parseInt(cakeCard.querySelector('.quantity-count').innerText);
+
+            
+            const cakeInCart = cart.find(cake => cake.name === cakeName);
+            if (cakeInCart) {
+                cakeInCart.quantity += quantity;
+            } else {
+                const cake = {
+                    name: cakeName,
+                    price: price,
+                    quantity: quantity,
+                    image: cakeCard.querySelector('img').src
+                };
+                cart.push(cake);
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert('${cakeName} added to cart');
+        }
+    </script>
+</body>
+</html>
